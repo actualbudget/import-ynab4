@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "date-fns": "2.0.0-alpha.27",
+    "node-actual": "actualbudget/node-actual",
+    "slash": "^3.0.0",
+    "uuid": "^3.3.2"
+  }
+}

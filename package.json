@@ -1,7 +1,7 @@
 {
   "name": "@actual-app/import-ynab4",
   "description": "A tool for importing YNAB4 data into Actual",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "index.js",
   "devDependencies": {},
   "repository": {

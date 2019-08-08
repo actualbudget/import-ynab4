@@ -332,22 +332,22 @@ function findLatestDevice(files) {
 async function doImport(data) {
   const entityIdMap = new Map();
 
-  console.log('Importing Accounts', entityIdMap.size);
+  console.log('Importing Accounts...');
   await importAccounts(data, entityIdMap);
 
-  console.log('Importing Categories', entityIdMap.size);
+  console.log('Importing Categories...');
   await importCategories(data, entityIdMap);
 
-  console.log('Importing Payees', entityIdMap.size);
+  console.log('Importing Payees...');
   await importPayees(data, entityIdMap);
 
-  console.log('Importing Transactions', entityIdMap.size);
+  console.log('Importing Transactions...');
   await importTransactions(data, entityIdMap);
 
-  console.log('Importing Budgets', entityIdMap.size);
+  console.log('Importing Budgets...');
   await importBudgets(data, entityIdMap);
 
-  console.log('Done', entityIdMap.size);
+  console.log('Setting up...');
 }
 
 async function importYNAB4(filepath) {

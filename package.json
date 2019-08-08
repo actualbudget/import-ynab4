@@ -16,7 +16,7 @@
   "bin": "./index.js",
   "homepage": "https://github.com/actualbudget/importer-ynab4#readme",
   "dependencies": {
-    "@actual-app/api": "1.0.0",
+    "@actual-app/api": "^1.0.0",
     "date-fns": "2.0.0-alpha.27",
     "slash": "3.0.0",
     "uuid": "3.3.2"

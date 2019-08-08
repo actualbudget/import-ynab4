@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@actual-app/api@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@actual-app/api/-/api-1.0.0.tgz#07d8f02d3de6b4c2e2b072c2c12e5a7afc641746"
-  integrity sha512-LxPBKUg49EoBuePSuQftXyxtjCCKMpefZMDb5RgVTEXBm+fwo/CAC4uAXcnO5BwYZohN2wD7KFuwnXI7HDg7BA==
+"@actual-app/api@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@actual-app/api/-/api-1.0.1.tgz#b13c800bd832ddcee01f87790f21b4f8b96623af"
+  integrity sha512-V8CxFqzcq/uIznrDHJIQ9Xpr+/bNHfgBrwi6uQQic0foafY2QUXIy/m0VMimxzUAjWhMOouRDWSV8CAwanz4zA==
   dependencies:
     node-ipc "9.1.1"
     uuid "3.3.2"

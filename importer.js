@@ -3,8 +3,8 @@ const os = require('os');
 const { join } = require('path');
 const d = require('date-fns');
 const normalizePathSep = require('slash');
-const actual = require('node-actual');
 const uuid = require('uuid');
+const actual = require('@actual-app/api');
 const { amountToInteger } = actual.utils;
 
 // Utils

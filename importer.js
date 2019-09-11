@@ -49,6 +49,24 @@ function groupBy(arr, keyName) {
   }, {});
 }
 
+function _parse(value) {
+  if (typeof value === 'string') {
+    // We don't want parsing to take local timezone into account,
+    // which parsing a string does. Pass the integers manually to
+    // bypass it.
+
+    let [year, month, day] = value.split('-');
+    if (day != null) {
+      return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    } else if (month != null) {
+      return new Date(parseInt(year), parseInt(month) - 1, 1);
+    } else {
+      return new Date(parseInt(year), 0, 1);
+    }
+  }
+  return value;
+}
+
 function monthFromDate(date) {
   return d.format(d.parseISO(date), 'yyyy-MM');
 }
@@ -133,7 +151,7 @@ async function importPayees(data, entityIdMap) {
 }
 
 async function importTransactions(data, entityIdMap) {
-  const categories = await actual.getCategories({ asList: true });
+  const categories = await actual.getCategories();
   const incomeCategoryId = categories.find(cat => cat.name === 'Income').id;
   const accounts = await actual.getAccounts();
   const payees = await actual.getPayees();

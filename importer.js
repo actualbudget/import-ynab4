@@ -68,7 +68,7 @@ function _parse(value) {
 }
 
 function monthFromDate(date) {
-  return d.format(d.parseISO(date), 'yyyy-MM');
+  return d.format(_parse(date), 'yyyy-MM');
 }
 
 function getCurrentMonth() {
@@ -370,7 +370,7 @@ async function doImport(data) {
 
 async function importYNAB4(filepath) {
   const unixFilepath = normalizePathSep(filepath);
-  const m = unixFilepath.match(/\/([^\/\~]*)\~.*\.ynab4/);
+  const m = unixFilepath.toLowerCase().match(/\.ynab4$/);
   if (!m) {
     throw new Error('Not a YNAB4 file: ' + filepath);
   }

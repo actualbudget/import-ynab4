@@ -368,13 +368,28 @@ async function doImport(data) {
   console.log('Setting up...');
 }
 
-async function importYNAB4(filepath) {
-  const unixFilepath = normalizePathSep(filepath);
-  const m = unixFilepath.toLowerCase().match(/\.ynab4$/);
+function getBudgetName(filepath) {
+  let unixFilepath = normalizePathSep(filepath);
+
+  // Most budgets are named like "Budget~51938D82.ynab4" but sometimes
+  // they are only "Budget.ynab4". We only want to grab the name
+  // before the ~ if it exists.
+  let m = unixFilepath.match(/([^\/\~]*)\~.*\.ynab4$/);
   if (!m) {
+    m = unixFilepath.match(/([^\/]*)\.ynab4$/);
+  }
+  if (!m) {
+    return null;
+  }
+  return m[1];
+}
+
+async function importYNAB4(filepath) {
+  const budgetName = getBudgetName(filepath);
+
+  if (!budgetName) {
     throw new Error('Not a YNAB4 file: ' + filepath);
   }
-  let budgetName = m[1];
 
   const metaStr = fs.readFileSync(join(filepath, 'Budget.ymeta'));
   const meta = JSON.parse(metaStr);
@@ -408,10 +423,10 @@ function findBudgetsInDir(dir) {
     return fs
       .readdirSync(dir)
       .map(file => {
-        const m = file.match(/^([^\~]*)\~.*\.ynab4/);
-        if (m) {
+        const name = getBudgetName(file);
+        if (name) {
           return {
-            name: m[1],
+            name,
             filepath: join(dir, file)
           };
         }

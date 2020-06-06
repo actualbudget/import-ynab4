@@ -273,36 +273,37 @@ async function importBudgets(data, entityIdMap) {
     const carryoverFlags = {};
 
     for (let budget of budgets) {
+      let filled = fillInBudgets(
+        data,
+        budget.monthlySubCategoryBudgets.filter(b => !b.isTombstone)
+      );
+
       await Promise.all(
-        fillInBudgets(data, budget.monthlySubCategoryBudgets).map(
-          async catBudget => {
-            if (!catBudget.isTombstone) {
-              let amount = amountToInteger(catBudget.budgeted);
-              let catId = entityIdMap.get(catBudget.categoryId);
-              let month = monthFromDate(budget.month);
-              if (!catId) {
-                return;
-              }
-
-              await actual.setBudgetAmount(month, catId, amount);
-
-              if (catBudget.overspendingHandling === 'AffectsBuffer') {
-                // Turn off the carryover flag so it doesn't propagate
-                // to future months
-                carryoverFlags[catId] = false;
-              } else if (
-                catBudget.overspendingHandling === 'Confined' ||
-                carryoverFlags[catId]
-              ) {
-                // Overspending has switched to carryover, set the
-                // flag so it propagates to future months
-                carryoverFlags[catId] = true;
-
-                await actual.setBudgetCarryover(month, catId, true);
-              }
-            }
+        filled.map(async catBudget => {
+          let amount = amountToInteger(catBudget.budgeted);
+          let catId = entityIdMap.get(catBudget.categoryId);
+          let month = monthFromDate(budget.month);
+          if (!catId) {
+            return;
           }
-        )
+
+          await actual.setBudgetAmount(month, catId, amount);
+
+          if (catBudget.overspendingHandling === 'AffectsBuffer') {
+            // Turn off the carryover flag so it doesn't propagate
+            // to future months
+            carryoverFlags[catId] = false;
+          } else if (
+            catBudget.overspendingHandling === 'Confined' ||
+            carryoverFlags[catId]
+          ) {
+            // Overspending has switched to carryover, set the
+            // flag so it propagates to future months
+            carryoverFlags[catId] = true;
+
+            await actual.setBudgetCarryover(month, catId, true);
+          }
+        })
       );
     }
   });

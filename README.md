@@ -1,3 +1,8 @@
+**This repository is archived.**
+
+New location for the package: https://github.com/actualbudget/actual/tree/master/packages/import-ynab4
+
+---
 
 ```
 npx @actual-app/import-ynab4 <path-to-ynab4-file>
